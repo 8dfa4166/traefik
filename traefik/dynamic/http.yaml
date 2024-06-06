@@ -41,10 +41,10 @@ tls:
   certificates:
     - certFile: /etc/traefik/certs/server/server.pem
       keyFile: /etc/traefik/certs/server/server.key
-  options:
-    default:
-      clientAuth:
-        caFiles:
-          - /etc/traefik/certs/client/rootCA2.pem
-          - /etc/traefik/certs/client/inCA2.pem
-        clientAuthType: RequireAndVerifyClientCert
+  # options:
+  #   default:
+  #     clientAuth:
+  #       caFiles:
+  #         - /etc/traefik/certs/client/rootCA2.pem
+  #         - /etc/traefik/certs/client/inCA2.pem
+  #       clientAuthType: RequireAndVerifyClientCert

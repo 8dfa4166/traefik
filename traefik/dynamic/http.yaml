@@ -3,11 +3,13 @@ http:
     traefik:
       rule: "Host(`traefik.aimerzarashi.com`)"
       service: api@internal
-      tls: {}
+      tls:
+        options: client-auth@file
     whoami:
       rule: "Host(`whoami.aimerzarashi.com`)"
       service: whoami
-      tls: {}
+      tls:
+        options: client-auth@file
     web:
       rule: "Host(`web.aimerzarashi.com`)"
       service: web
@@ -41,10 +43,10 @@ tls:
   certificates:
     - certFile: /etc/traefik/certs/server/server.pem
       keyFile: /etc/traefik/certs/server/server.key
-  # options:
-  #   default:
-  #     clientAuth:
-  #       caFiles:
-  #         - /etc/traefik/certs/client/rootCA2.pem
-  #         - /etc/traefik/certs/client/inCA2.pem
-  #       clientAuthType: RequireAndVerifyClientCert
+  options:
+    client-auth:
+      clientAuth:
+        caFiles:
+          - /etc/traefik/certs/client/rootCA2.pem
+          - /etc/traefik/certs/client/inCA2.pem
+        clientAuthType: RequireAndVerifyClientCert

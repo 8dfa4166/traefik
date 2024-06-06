@@ -21,7 +21,7 @@ api:
   insecure: true
 
 accessLog:
-  filePath: "/etc/traefik/logs/access.log"
+  filePath: "/etc/logs/access.log"
   format: json
   fields:
     defaultMode: keep

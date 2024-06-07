@@ -28,7 +28,7 @@ services:
       - "-c"
       - |
         npm install;
-        npx tsx index.ts;
+        npm run dev;
   idp:
     ports:
       - 8080:8080

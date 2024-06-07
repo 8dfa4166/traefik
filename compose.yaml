@@ -1,15 +1,9 @@
-networks:
-  frontend:
-  backend:
-
 services:
   rproxy:
-    networks:
-      - frontend
     image: traefik:v3.0
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./rproxy:/etc/traefik:ro
@@ -20,15 +14,9 @@ services:
       - --accesslog.fields.names.StartUTC=drop
       - --providers.docker
   whoami:
-    networks:
-      - frontend
     image: traefik/whoami
   web:
-    networks:
-      - frontend
     image: node:20-alpine3.18
-    ports:
-      - 3000:3000
     depends_on:
       - idp
     volumes:
@@ -42,13 +30,9 @@ services:
         npm install;
         npm run dev;
   idp:
-    networks:
-      - frontend
-      - backend
-    image: bitnami/keycloak:24
     ports:
       - 8080:8080
-      - 8443:8443
+    image: bitnami/keycloak:24
     environment:
       KEYCLOAK_ADMIN_USER: user
       KEYCLOAK_ADMIN_PASSWORD: bitnami
@@ -63,13 +47,10 @@ services:
     depends_on:
       - db
       - smtp
+    dns_search: aimerzarashi.com
   db:
-    networks:
-      - backend
     container_name: db
     image: postgres:16.3
-    ports:
-      - 5432:5432
     restart: always
     environment:
       POSTGRES_USER: bn_keycloak
@@ -78,19 +59,5 @@ services:
     volumes:
       - ./db/data:/var/lib/postgresql/data
   smtp:
-    networks:
-      - frontend
-      - backend
     container_name: smtp
     image: mailhog/mailhog
-    ports:
-      - 1025:1025
-  # dns:
-  #   build:
-  #     context: ./dns
-  #   container_name: dns
-  #   restart: always
-  #   ports:
-  #     - "1053:53/udp"
-  #   volumes:
-  #     - "./dns/config:/etc/coredns"

@@ -9,7 +9,8 @@ app.set("trust proxy", true);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
-// app.use("/auth/*", ExpressAuth({ providers: [Keycloak] }));
+
+app.use("/auth/*", ExpressAuth({ providers: [Keycloak] }));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
